@@ -1,0 +1,46 @@
+/**
+ * INSTALLATION: this code should be pasted into your theme's header.php file before the </head> tag.
+ *
+ * Use this filter to start and stop Flex Slider when it is in and out of viewport. Change the metaslider_XXXX to the id of the slider.
+ * I added a bit of background styling so that you can see when it is activated and deactivated.
+ * This is my first filter for Flex Slider, so I apologize when there are some programming weaknesses in the code.
+ * Use on your own risk. Note that changing the template files may break your system and changes may get lost when updating the template.
+ * 
+ * The code adds two observers that get triggered when the selected element comes in viewport. The threshold can vary between 0 and 1, indicating
+ * the percentage being visible or hidden.
+ */
+
+<script>	
+	var observer_start = new IntersectionObserver(function(entries) {
+		if(entries[0].isIntersecting === true) {
+			jQuery('#metaslider_2129').flexslider("play");	
+			jQuery('#metaslider_2129').css({
+            'color':'white',
+            'background':'#888',
+			'border-radius' : '5px',
+            'box-shadow' : '1px 3px 6px #888',
+            '-moz-box-shadow' : '1px 3px 6px #888',
+            '-webkit-box-shadow' : '1px 3px 6px #888',
+        	});
+		}
+	}, { threshold: [1] });
+	
+	var observer_stop = new IntersectionObserver(function(entries) {
+		if(entries[0].isIntersecting === false) {
+			jQuery('#metaslider_2129').flexslider("stop");	
+		jQuery('#metaslider_2129').css({
+            'color':'white',
+            'background':'inherit',	
+            'border-radius' : '5px',
+            'box-shadow' : 'none',
+            '-moz-box-shadow' : 'none',
+            '-webkit-box-shadow' : 'none',
+        	});
+		}
+	}, { threshold: [1] });
+	
+	document.addEventListener("DOMContentLoaded", function(event) { 
+		observer_start.observe(document.querySelector("#metaslider_2129"));
+		observer_stop.observe(document.querySelector("#metaslider_2129"));
+	});
+</script>
